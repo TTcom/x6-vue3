@@ -1,44 +1,46 @@
 {
-  "name": "my-vue-app",
-  "private": true,
-  "version": "0.0.0",
+  "name": "vuex6",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/vite-lib.es.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@iconify-json/carbon": "^1.1.7",
+    "@iconify-json/ic": "^1.1.9",
+    "@iconify-json/ph": "^1.1.2",
+    "@originjs/vite-plugin-require-context": "^1.0.9",
+    "@unocss/reset": "0.45.1",
+    "path-browserify": "^1.0.1",
+    "unocss": "0.45.1",
+    "unplugin-vue2-script-setup": "^0.11.3",
+    "vite": "v3.0.3",
+    "vite-plugin-svg-icons": "^2.0.1",
+    "vite-plugin-vue2": "^2.0.2"
   },
   "dependencies": {
-    "@antv/x6": "^2.9.1",
-    "@antv/x6-vue3-shape": "^1.0.0",
-    "@vueuse/core": "^8.2.5",
-    "@vueuse/head": "^0.7.6",
-    "axios": "^0.26.1",
-    "cross-env": "^7.0.3",
-    "element-plus": "^2.3.1",
-    "sass": "^1.49.9",
-    "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "@vue/composition-api": "^1.4.9",
+    "@antv/x6": "1.32.3",
+    "@antv/x6-vue-shape": "1.4.0",
+    "jquery": "^3.6.1",
+    "jquery-mousewheel": "^3.1.13",
+    "mousetrap": "^1.6.5",
+    "sass": "1.26.5",
+    "vue": "~2.6.14",
+    "vue-demi": "^0.12.5",
+    "vue-template-compiler": "~2.6.14"
   },
-  "devDependencies": {
-    "@babel/eslint-parser": "^7.21.3",
-    "@iconify-json/ic": "^1.1.9",
-    "@unocss/reset": "^0.45.26",
-    "@vitejs/plugin-vue": "^4.1.0",
-    "@vitejs/plugin-vue-jsx": "^3.0.1",
-    "@vue/eslint-config-prettier": "^7.1.0",
-    "eslint": "^8.37.0",
-    "eslint-config-prettier": "^8.8.0",
-    "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.10.0",
-    "mockjs": "^1.1.0",
-    "prettier": "^2.8.7",
-    "unocss": "^0.50.6",
-    "unplugin-auto-import": "0.7.1",
-    "unplugin-vue-components": "^0.24.1",
-    "vite": "^4.2.1",
-    "vite-plugin-eslint": "^1.8.1",
-    "vite-plugin-mock": "^2.9.6",
-    "vite-plugin-pages": "^0.29.0",
-    "vite-plugin-style-import": "1.4.1"
-  }
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
 }

@@ -6,7 +6,7 @@
 
 <script setup>
 import { Graph } from "@antv/x6"
-// import "@antv/x6-vue3-shape"
+import "@antv/x6-vue3-shape"
 import { onMounted } from "vue"
 const container = ref(null)
 const graph = shallowRef()
@@ -37,17 +37,17 @@ onMounted(() => {
       ],
     },
   })
-  // graph.value.addNode({
-  //   id: "node1",
-  //   x: 40,
-  //   y: 40,
-  //   width: 100,
-  //   height: 40,
-  //   shape: "vue3-shape",
-  //   component: {
-  //     template: `<hello-world :name="name"></hello-world>`,
-  //   },
-  // })
+  graph.value.addNode({
+    id: "node1",
+    x: 40,
+    y: 40,
+    width: 100,
+    height: 40,
+    shape: "vue3-shape",
+    component: {
+      template: `<hello-world :name="name"></hello-world>`,
+    },
+  })
 })
 // import { demo, demo2 } from "../../dist/vite-lib.es"
 // import {TestA} from '../../dist/vite-lib.umd' // 二者

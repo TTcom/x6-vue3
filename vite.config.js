@@ -1,88 +1,70 @@
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import styleImport, { ElementPlusResolve } from 'vite-plugin-style-import';
-import eslintPlugin from 'vite-plugin-eslint';
-import AutoImport from 'unplugin-auto-import/vite'
-import Components from 'unplugin-vue-components/vite'
-import {ElementPlusResolver} from 'unplugin-vue-components/resolvers'
-import Pages from 'vite-plugin-pages'
 import path from 'path'
-import vueJsx from "@vitejs/plugin-vue-jsx";
+import { defineConfig,loadEnv } from 'vite'
+import { createVuePlugin as Vue2 } from 'vite-plugin-vue2'
+import ScriptSetup from 'unplugin-vue2-script-setup/vite'
+import ViteRequireContext from "@originjs/vite-plugin-require-context";
 import Unocss from 'unocss/vite'
-console.log("process.envvvvvv",process.env)
-import { viteMockServe } from 'vite-plugin-mock';
-// https://vitejs.dev/config/
-export default defineConfig({
-  base: "./",
+const config = defineConfig({
   build: {
-    // lib: {
-    //   entry:  'package/index.js', // 设置入口文件
-    //   name: 'vite-lib', // 起个名字，安装、引入用
-    //   fileName: (format) => `vite-lib.${format}.js` // 打包后的文件名
-    // },
-    // sourcemap: true, // 输出.map文件
-    // rollupOptions: {
-    //   // 确保外部化处理那些你不想打包进库的依赖
-    //   external: ['vue', 'ant-design-vue'],
-    //   output: {
-    //     // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
-    //     globals: {
-    //       vue: 'Vue'
-    //     }
-    //   }
-    // }
-  },
-  resolve: {
-    alias: {
-      '~/': `${path.resolve(__dirname, 'src')}/`, // 设置 `~` 指向 `src` 目录
+    lib: {
+      entry:  'packages/index.js', // 设置入口文件
+      name: 'vite-lib', // 起个名字，安装、引入用
+      fileName: (format) => `vite-lib.${format}.js` // 打包后的文件名
+    },
+    terserOptions: {
+      compress: {
+          drop_console: true,
+          drop_debugger: true,
+      },
+    },
+    target:['edge90','chrome90','firefox90','safari15'],
+    cssCodeSplit: true, // 输出.map文件
+    sourcemap: true, // 输出.map文件
+    rollupOptions: {
+      // 确保外部化处理那些你不想打包进库的依赖
+      external: [],
+      output: {
+        // 资源文件名 css 图片等等
+        assetFileNames: 'assets/[name].[ext]',
+      },
     }
   },
+  // base: './', // 设置打包路径
+  resolve: {
+
+    alias: {
+      '@': `${path.resolve(__dirname, 'src')}`,
+      '@antv/x6/lib/util/': `@antv/x6/es/util/`,
+      // "~": `${path.resolve(__dirname, 'node_modules/')}`,
+      vue: "vue/dist/vue.esm.js",
+    },
+    // 忽略后缀名的配置选项, 添加 .vue 选项时要记得原本默认忽略的选项也要手动写入
+    extensions: ['.mjs', '.js', '.ts', '.jsx', '.tsx', '.json', '.vue'],
+    dedupe: ['vue-demi'],
+  },
+  // build: {
+  //   minify: true
+  // },
+  define: { 'process.env': process.env },
   plugins: [
-    vueJsx({
-      transformOn: true
+    Vue2({
+      jsx: true
     }),
-    vue({
-      include: [/\.vue$/, /\.md$/]
-    }),
-    eslintPlugin({fix:true}),
-    styleImport({
-      resolves: [ElementPlusResolve()],
-    }),
-    Components({
-      resolvers: [
-        ElementPlusResolver()
-      ],
-      include: [/\.vue$/, /\.vue\?vue/, /\.md$/]
-    }),
-    // https://github.com/hannoeru/vite-plugin-pages
-    Pages({
-      extensions: ['vue', 'md'],
-      syncIndex: false
-    }),
-    viteMockServe({
-      mockPath: 'mock',
-      injectCode: `
-        import { setupMockServer } from '../mock';
-        setupMockServer();
-      `,
-    }),
-    AutoImport({ 
-      imports: ['vue','vue-router','@vueuse/head'] 
-    }),
+    ViteRequireContext(),
+    ScriptSetup(),
     Unocss({
       // mode : 'shadow-dom'
     })
   ],
-  // build:{
-  //   target:['edge90','chrome90','firefox90','safari15']
-  // },
-  // base: process.env.VUE_APP_LOCAL_ENV === "true" ? './' : "/servename/", // 设置打包路径
-  // base: './', // 设置打包路径
-  server: {
-    // host: '0.0.0.0',
-    port: 8085, // 设置服务启动端口号
-    open: false, // 设置服务启动时是否自动打开浏览器
-    https: false,
-    cors: true // 允许跨域
+  optimizeDeps: {
+    exclude: ['@antv/x6-vue-shape',"@antv/x6"],
+    include: ['mousetrap',"jquery","jquery-mousewheel"],
   }
 })
+export default ({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  process.env = { ...process.env, ...env };
+  console.log("bbbbbbbbbbbbb",process.env)
+  return config
+};
+
